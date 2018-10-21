@@ -2,7 +2,7 @@
 
 Classifier for TRULASER7030 part sorter
 
-Folder "tango" contains various scripts and text files from basic data viewing and understanding, and the implementation of neural networks.
+Folder "tango" contains various scripts and text files for basic data viewing and understanding, and the implementation of neural networks.
 
 Files:
 	logs/*: results from nn-ensemble
@@ -15,3 +15,6 @@ Files:
 	pca.py: preprocess and view features using pca
 	success_by_name.txt: success rate for each part id
 	test, train, valid.txt: list of part id for each dataset
+
+Folder "memid" contains a Jupyter notebook, with implementations of decision trees and plots of results.
+

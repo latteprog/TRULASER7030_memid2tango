@@ -11,6 +11,7 @@ Files:
 	classifier&ast;.py: implementations of classifier, using different features and pca preprocessing  
 	corr_by_feature.txt: list of correlation between each feature and success rate  
 	load_data.py: util script - loads and splits data into train, valid, test sets  
+	log_9.txt: final results from classifier.py  
 	parts.py: view information about parts  
 	pca.py: preprocess and view features using pca  
 	success_by_name.txt: success rate for each part id  

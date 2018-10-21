@@ -11,6 +11,7 @@ def runOptimize(epochs):
 	for epoch in range(epochs):
 		# train
 		random.shuffle(train)
+
 		iterationLoss = 0.0
 		accuracy = 0.0
 
@@ -66,18 +67,20 @@ def runTest():
 	print("Testing loss = %lf" % (iterationLoss / float(len(test))))
 	print("Testing accuracy = %lf" % (accuracy / float(len(test))))
 
-# train, valid, test = load_data.load_data([9, 11, 50, 49, 10, 60, 57, 58, 59, 82, 12, 7, 90, 64, 53, 25, 13, 15, 63, 83, 34, 38, 46, 43, 36, 91, 92, 14, 81, 85, 80, 84, 55, 93, 94, 42, 20, 24, 45, 44, 54, 8])
-train, valid, test = load_data.load_data([10, 18, 24, 44, 45, 51, 53, 55, 68, 72, 80, 86])
+train, valid, test = load_data.load_data([9, 11, 50, 49, 10, 60, 57, 58, 59, 82, 12, 7, 90, 64, 53, 25, 13, 15, 63, 83, 34, 38, 46, 43, 36, 91, 92, 14, 81, 85, 80, 84, 55, 93, 94, 42, 20, 24, 45, 44, 54, 8])
+# train, valid, test = load_data.load_data([10, 18, 24, 44, 45, 51, 53, 55, 68, 72, 80, 86])
 # train, valid, test = load_data.load_data([11, 50, 49, 10, 60, 57, 58, 59, 82, 12, 7, 90, 64, 53, 25, 13, 15, 63, 83, 34])
 # train, valid, test = load_data.load_data([3, 5, 9, 11, 50, 49, 10, 60, 57, 58, 59, 82, 12, 7, 90, 64, 53, 25, 13, 15, 63, 83, 34, 38, 46, 43, 36, 91, 92, 14, 81, 85, 80, 84, 55, 93, 94, 42, 20, 24, 45, 44, 54, 8, 6, 41, 74, 23, 22, 47, 48, 33, 27, 26, 73, 51, 16, 95, 35, 88, 76, 37, 68, 17, 65, 86, 18, 21, 72, 31, 71, 66, 79, 67, 29, 77, 78, 89, 28, 30, 87, 32, 19, 52, 56])
 
-model_x = tf.placeholder(tf.float32, shape = [None, 12])
-model_y_true = tf.placeholder(tf.float32, shape = [None, 1])
-model_hidden_1, _ = Layers.fullyConnected(model_x, name = "hidden_1", output_size = 10, activation_fn = "relu")
-model_hidden_2, _ = Layers.fullyConnected(model_hidden_1, name = "hidden_2", output_size = 5, activation_fn = "relu")
-model_y_pred, model_w1 = Layers.fullyConnected(model_hidden_2, name = "y_pred", output_size = 1, activation_fn = "sigmoid")
+train = train + valid
 
-model_loss = tf.reduce_mean(tf.pow(model_y_pred - model_y_true, 2)) + 2.0 * tf.reduce_mean(tf.abs(model_w1))
+model_x = tf.placeholder(tf.float32, shape = [None, 45])
+model_y_true = tf.placeholder(tf.float32, shape = [None, 1])
+model_hidden_1, _ = Layers.fullyConnected(model_x, name = "hidden_1", output_size = 8, activation_fn = "relu")
+model_hidden_2, _ = Layers.fullyConnected(model_hidden_1, name = "hidden_2", output_size = 4, activation_fn = "relu")
+model_y_pred, _ = Layers.fullyConnected(model_hidden_2, name = "y_pred", output_size = 1, activation_fn = "sigmoid")
+
+model_loss = tf.reduce_mean(tf.pow(model_y_pred - model_y_true, 2))
 model_opt = tf.train.AdamOptimizer(learning_rate = 1e-3).minimize(model_loss)
 
 model_y_pred_discrete = tf.cast(tf.greater(model_y_pred, 0.5), dtype = tf.float32)
